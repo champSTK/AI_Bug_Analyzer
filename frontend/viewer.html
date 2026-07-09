@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Storage Viewer — AI Bug Analyzer</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="header-row">
+        <div>
+          <h1>🗄️ Storage Viewer</h1>
+          <p class="subtitle">Local stand-ins for PostgreSQL &amp; Qdrant <span class="badge">read-only</span></p>
+        </div>
+        <a href="index.html" class="viewer-link">← Back to Ingestion</a>
+      </div>
+    </header>
+
+    <main>
+      <div class="summary-cards" id="summary-cards">
+        <div class="summary-card">
+          <div class="label">bug_reports (SQLite)</div>
+          <div class="number">—</div>
+        </div>
+        <div class="summary-card">
+          <div class="label">bug_chunks (SQLite)</div>
+          <div class="number">—</div>
+        </div>
+        <div class="summary-card">
+          <div class="label">bug_vectors (JSON)</div>
+          <div class="number">—</div>
+        </div>
+      </div>
+
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="documents">PostgreSQL · bug_reports</button>
+        <button class="tab-btn" data-tab="chunks">PostgreSQL · bug_chunks</button>
+        <button class="tab-btn" data-tab="vectors">Qdrant · bug_vectors</button>
+      </div>
+
+      <section class="panel">
+        <div id="tab-documents" class="tab-panel active">
+          <div class="table-scroll">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>bug_id</th>
+                  <th>title</th>
+                  <th>severity</th>
+                  <th>component</th>
+                  <th>source</th>
+                  <th>ingested_at</th>
+                  <th>status</th>
+                </tr>
+              </thead>
+              <tbody id="documents-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="tab-chunks" class="tab-panel">
+          <div class="table-scroll">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>chunk_id</th>
+                  <th>bug_id</th>
+                  <th>#</th>
+                  <th>chunk_text</th>
+                  <th>chars</th>
+                  <th>created_at</th>
+                </tr>
+              </thead>
+              <tbody id="chunks-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="tab-vectors" class="tab-panel">
+          <div class="table-scroll">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>point id</th>
+                  <th>bug_id</th>
+                  <th>chunk_id</th>
+                  <th>text_preview</th>
+                  <th>vector (first 8 dims)</th>
+                  <th>dim</th>
+                </tr>
+              </thead>
+              <tbody id="vectors-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>Backend: <code id="api-base-display"></code></p>
+    </footer>
+  </div>
+
+  <div class="modal-backdrop hidden" id="modal-backdrop">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="modal-title">Detail</h2>
+        <button class="modal-close" id="modal-close">✕</button>
+      </div>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <script src="viewer.js"></script>
+</body>
+</html>

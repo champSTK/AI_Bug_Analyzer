@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI Bug Analyzer — Ingestion</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="header-row">
+        <div>
+          <h1>🐛 AI Bug Analyzer</h1>
+          <p class="subtitle">Stages 1-3 — Ingestion, Chunking &amp; Embedding <span class="badge">local storage</span></p>
+        </div>
+        <a href="viewer.html" class="viewer-link">View Storage →</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="panel">
+        <h2>Ingest a raw error / crash log</h2>
+        <form id="ingest-form">
+          <label for="source">Source</label>
+          <select id="source" name="source">
+            <option value="manual">Manual</option>
+            <option value="jira">JIRA Webhook</option>
+            <option value="ci-cd">CI/CD</option>
+            <option value="slack">Slack</option>
+            <option value="dataset">Dataset (Bulk Import)</option>
+          </select>
+          <p class="hint" id="source-hint">Manual / JIRA / CI-CD / Slack: your submission is always treated as exactly one bug report.</p>
+
+          <label for="raw-text">Raw log / crash dump / JIRA text</label>
+          <textarea
+            id="raw-text"
+            name="raw_text"
+            rows="10"
+            placeholder="Paste a raw stack trace, crash log, or bug description here..."
+          ></textarea>
+
+          <div class="or-divider"><span>or</span></div>
+
+          <label for="file-input">Upload a file (.txt, .log, .md, .json, .csv, .pdf, ...)</label>
+          <input type="file" id="file-input" name="file" accept=".txt,.log,.md,.json,.csv,.yaml,.yml,.xml,.pdf" />
+          <div id="file-name" class="file-name"></div>
+
+          <p class="hint">If a file is uploaded, it's used instead of the pasted text above.</p>
+
+          <button type="submit" id="submit-btn">Ingest</button>
+        </form>
+        <div id="status" class="status"></div>
+      </section>
+
+      <section class="panel">
+        <h2>Import Summary</h2>
+        <div id="result" class="result-empty">Nothing imported yet.</div>
+      </section>
+    </main>
+
+    <footer>
+      <p>Backend: <code id="api-base-display"></code></p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
